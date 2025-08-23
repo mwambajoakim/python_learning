@@ -8,4 +8,4 @@ def average_grade(grades=[]):
     for num in grades:
         total += num
     avg = total / len(grades)
-    print(f"The average grade is {avg}")
+    print(f"The average grade is {avg:.2f}")
