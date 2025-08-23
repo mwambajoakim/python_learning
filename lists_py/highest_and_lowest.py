@@ -15,5 +15,3 @@ def high_and_low(grades=[]):
             highest = grade
     print(f"Lowest grade is {lowest}")
     print(f"Highest grade is {highest}")
-
-            
