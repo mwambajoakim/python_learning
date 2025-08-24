@@ -7,22 +7,23 @@ users = [
         "name": "Joe Dean",
         "email": "jd@email.com",
         "age": 27,
-        "city":"Maputo"
+        "city": "Maputo"
     },
     {
         "name": "Jane Mern",
         "email": "jm@email.com",
         "age": 24,
-        "city":"Tripoli"
+        "city": "Tripoli"
     },
     {
         "name": "Kim Lord",
         "email": "km@email.com",
         "age": 34,
-        "city":"Kampala"
+        "city": "Kampala"
     }
 ]
 
+# Prints the users age above 25
 for i in range(len(users)):
     if users[i]["age"] > 25:
         print(users[i])
@@ -30,7 +31,6 @@ for i in range(len(users)):
 print("----------------------------------")
 print("----------------------------------")
 
-    
 user_city(users, "Maputo")
 
 print("----------------------------------")
