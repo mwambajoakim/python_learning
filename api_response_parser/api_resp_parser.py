@@ -13,9 +13,7 @@ api_response = {
 
 # 1. Extract all user names
 users = api_response["data"]["users"]
-user_names = []
-for name in users:
-   user_names.append(name["name"])
+user_names = [name["name"] for name in users]
 print(user_names)
 
 # 2. Calculate total likes across all posts
@@ -36,3 +34,12 @@ for post in posts:
         if most_likes < most["likes"]:
             most_likes = most["likes"]
 print(most_likes)
+
+# 4. Create a summary dictionary with user stats
+users = api_response["data"]["users"]
+posts = [post["posts"] for post in users]
+user_dict = []
+for name in users:
+    user_dict.append({keys: values
+                      for keys, values in name.items()
+                      if keys == "name"})
