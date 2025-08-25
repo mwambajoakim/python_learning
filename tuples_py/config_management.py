@@ -31,4 +31,11 @@ configs = {
     "staging": staging,
     "production": production
     }
+ports = range(1, 65535)
+print(ports)
 
+# 3. Create a function that validates port numbers (1-65535)
+def port_validator(port=0):
+    for i in range(1, 65536):
+        if port != i:
+            return
