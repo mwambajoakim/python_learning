@@ -26,4 +26,13 @@ for post in posts:
     for like in post:
         total += like["likes"]
 print(total)
-#print(posts)
+
+# 3. Find the user with the most likes
+users = api_response["data"]["users"]
+posts = [post["posts"] for post in users]
+for post in posts:
+    most_likes = post[0]["likes"]
+    for most in post:
+        if most_likes < most["likes"]:
+            most_likes = most["likes"]
+print(most_likes)
