@@ -18,3 +18,7 @@ for name in users:
     print(name["name"])
    # user_names.append(name["name"])
 
+# 2. Calculate total likes across all posts
+users = api_response["data"]["users"]
+posts = [post["post"] for post in posts]
+print(posts)
