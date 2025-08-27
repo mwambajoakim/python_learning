@@ -36,9 +36,22 @@ for post in posts:
 print(most_likes)
 
 # 4. Create a summary dictionary with user stats
-stats = {
+stats = [
+    {
     "name": "Alice",
-    "posts": 2,
-    "likes": 15
-    }
+    "stats": {
+        "posts": 2,
+        "likes": 15
+        }
+    },
+    {
+        "name": "Bob",
+        "stats": {
+            "posts": 5,
+            "likes": 32
+            }
+        }
+    ]
+
+print(stats)
     
