@@ -35,7 +35,14 @@ ports = range(1, 65535)
 print(ports)
 
 # 3. Create a function that validates port numbers (1-65535)
-def port_validator(port=0):
-    for i in range(1, 65536):
-        if port != i:
-            return
+def port_validator(config):
+    errors = []
+    for env, config in config.items():
+        if config.port < 1 and config.port > 65535:
+            print("Enter a valid port number")
+        else:
+            print("Initializing...")
+# 4. Convert config to connection string format
+
+#for env, config in configs.items():
+port_validator(configs)
