@@ -43,6 +43,7 @@ def port_validator(config):
         else:
             print("Initializing...")
 # 4. Convert config to connection string format
+for env, config in configs.items():
+    str(config)
 
-#for env, config in configs.items():
-port_validator(configs)
+print(configs)
