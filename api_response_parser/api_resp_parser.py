@@ -36,10 +36,9 @@ for post in posts:
 print(most_likes)
 
 # 4. Create a summary dictionary with user stats
-users = api_response["data"]["users"]
-posts = [post["posts"] for post in users]
-user_dict = []
-for name in users:
-    user_dict.append({keys: values
-                      for keys, values in name.items()
-                      if keys == "name"})
+stats = {
+    "name": "Alice",
+    "posts": 2,
+    "likes": 15
+    }
+    
