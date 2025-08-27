@@ -43,7 +43,8 @@ def port_validator(config):
         else:
             print("Initializing...")
 # 4. Convert config to connection string format
-for env, config in configs.items():
-    str(config)
+def config_to_string(config: DatabaseConfig) -> str:
+    return f"postgresql://{config.username}@{config.host}:{config.port}/{config.database}"
 
-print(configs)
+print(config_to_string(development))
+
