@@ -17,8 +17,9 @@ class Account:
         return self.amount
     
     def withdraw(self, amount):
-        # Your implementation here  
-        pass
+        """Records the withdrawal of an amount of money"""
+        self.initial_balance -= self.amount
+        return self.amount
     
     def get_balance(self):
         # Your implementation here
