@@ -26,5 +26,5 @@ class Account:
         return self.initial_balance
     
     def get_account_info(self):
-        # Your implementation here
-        pass
+        """Get the information of an account"""
+        return f"Account Holder - {self.account_holder} Account Balance - {self.initial_balance}"
