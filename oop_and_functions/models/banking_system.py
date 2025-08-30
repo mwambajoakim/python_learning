@@ -13,13 +13,12 @@ class Account:
     
     def deposit(self, amount):
         """Records the  deposit of an amount of money"""
-        self.initial_balance += self.amount
-        return self.amount
+        self.initial_balance += amount
     
     def withdraw(self, amount):
         """Records the withdrawal of an amount of money"""
-        self.initial_balance -= self.amount
-        return self.amount
+        if self.initial_balance > amoun:
+            self.initial_balance -= amount
     
     def get_balance(self):
         """Returns the balance in the account"""
