@@ -17,8 +17,10 @@ class Account:
     
     def withdraw(self, amount):
         """Records the withdrawal of an amount of money"""
-        if self.initial_balance > amoun:
+        if self.initial_balance > amount:
             self.initial_balance -= amount
+            return True
+        return False
     
     def get_balance(self):
         """Returns the balance in the account"""
