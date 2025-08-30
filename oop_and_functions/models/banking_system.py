@@ -12,8 +12,9 @@ class Account:
         self.initial_balance = initial_balance
     
     def deposit(self, amount):
-        # Your implementation here
-        pass
+        """Records the  deposit of an amount of money"""
+        self.initial_balance += self.amount
+        return self.amount
     
     def withdraw(self, amount):
         # Your implementation here  
