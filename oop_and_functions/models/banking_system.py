@@ -48,8 +48,8 @@ def validate_amount(amount):
 
 def calculate_interest(principal, rate, time_years):
     """Calculate simple interest: P * R * T / 100"""
-    # Your implementation here
-    pass
+    interest = (principal * rate * time_years) / 100
+    return interest
 
 def format_currency(amount):
     """Format amount as currency (e.g., 1234.56 -> '$1,234.56')"""
