@@ -34,3 +34,29 @@ class Account:
         Account Holder - {self.account_holder}
         Account Balance - {self.initial_balance}
         """
+#-----------------------------------
+# Stand alone functions
+#-----------------------------------
+
+def validate_amount(amount):
+    """Validate if amount is positive and reasonable (less than 1 million)"""
+   if amount < 0:
+       raise ValueError("Amount must be a positive number")
+   if amount > 1000000:
+       raise ValueError("Amount must be reasonable")
+   return amount
+
+def calculate_interest(principal, rate, time_years):
+    """Calculate simple interest: P * R * T / 100"""
+    # Your implementation here
+    pass
+
+def format_currency(amount):
+    """Format amount as currency (e.g., 1234.56 -> '$1,234.56')"""
+    # Your implementation here
+    pass
+
+def generate_transaction_id():
+    """Generate unique transaction ID using timestamp"""
+    # Your implementation here
+    pass
