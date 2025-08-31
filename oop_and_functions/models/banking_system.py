@@ -20,6 +20,8 @@ class Account:
     
     def withdraw(self, amount):
         """Records the withdrawal of an amount of money"""
+        if amount <= 0:
+            raise ValueError("Withdrawal amount must be a positive number")
         if self.initial_balance > amount:
             self.initial_balance -= amount
             return True
