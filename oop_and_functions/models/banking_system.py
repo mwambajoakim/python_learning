@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """A banking system that does all operations"""
+from datetime import datetime
 
 
 class Account:
@@ -13,6 +14,8 @@ class Account:
     
     def deposit(self, amount):
         """Records the  deposit of an amount of money"""
+        if amount <= 0:
+            raise ValueError("Deposit amount must be a positive number")
         self.initial_balance += amount
     
     def withdraw(self, amount):
