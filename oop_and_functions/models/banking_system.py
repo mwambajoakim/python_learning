@@ -36,11 +36,18 @@ class Account:
         Account Balance - {self.initial_balance}
         """
 #-----------------------------------
-# Stand alone functions
+# Standalone functions
 #-----------------------------------
 
 def validate_amount(amount):
-    """Validate if amount is positive and reasonable (less than 1 million)"""
+    """Validate if amount is positive and reasonable (less than 1 million)
+
+       Args:
+            amount: The amount of money to validate.
+
+       Return:
+              The amount of money after validation
+    """
     if amount < 0 or amount > 1000000:
         raise ValueError("Amount must be a positive number and reasonable")
     return amount
