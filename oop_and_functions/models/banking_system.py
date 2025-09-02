@@ -75,7 +75,11 @@ def format_currency(amount):
     return f"${amount:,}"
 
 def generate_transaction_id():
-    """Generate unique transaction ID using timestamp"""
+    """Generate unique transaction ID using timestamp
+
+       Return:
+              The date and time of transaction
+    """
     return time.ctime()
 
 #------------------------------------------
