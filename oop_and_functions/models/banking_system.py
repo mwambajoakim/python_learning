@@ -46,14 +46,21 @@ def validate_amount(amount):
             amount: The amount of money to validate.
 
        Return:
-              The amount of money after validation
+              The amount of money after validation.
     """
     if amount < 0 or amount > 1000000:
         raise ValueError("Amount must be a positive number and reasonable")
     return amount
 
 def calculate_interest(principal, rate, time_years):
-    """Calculate simple interest: P * R * T / 100"""
+    """Calculate simple interest: P * R * T / 100
+
+       Args:
+            amount: The principal amount of money.
+
+       Return:
+              The simple interest on the principal amount.
+    """
     return (principal * rate) * time_years / 100
 
 def format_currency(amount):
