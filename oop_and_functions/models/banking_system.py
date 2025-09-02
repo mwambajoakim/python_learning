@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """A banking system that does all operations"""
-from datetime import datetime
+import time
 
 
 class Account:
@@ -51,9 +51,7 @@ def calculate_interest(principal, rate, time_years):
 def format_currency(amount):
     """Format amount as currency (e.g., 1234.56 -> '$1,234.56')"""
     return f"${amount:,}"
-    
 
 def generate_transaction_id():
     """Generate unique transaction ID using timestamp"""
-    # Your implementation here
-    pass
+    return time.ctime()
