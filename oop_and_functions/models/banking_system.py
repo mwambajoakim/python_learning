@@ -50,6 +50,7 @@ def calculate_interest(principal, rate, time_years):
 
 def format_currency(amount):
     """Format amount as currency (e.g., 1234.56 -> '$1,234.56')"""
+    return f"${amount:,}"
     
 
 def generate_transaction_id():
