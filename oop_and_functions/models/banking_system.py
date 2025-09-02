@@ -64,7 +64,14 @@ def calculate_interest(principal, rate, time_years):
     return (principal * rate) * time_years / 100
 
 def format_currency(amount):
-    """Format amount as currency (e.g., 1234.56 -> '$1,234.56')"""
+    """Format amount as currency (e.g., 1234.56 -> '$1,234.56')
+
+       Args:
+            amount: The money as an unformatted string
+
+       Return:
+              The formatted string of the amount.
+    """
     return f"${amount:,}"
 
 def generate_transaction_id():
