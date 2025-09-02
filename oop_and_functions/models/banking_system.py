@@ -55,3 +55,11 @@ def format_currency(amount):
 def generate_transaction_id():
     """Generate unique transaction ID using timestamp"""
     return time.ctime()
+
+#------------------------------------------
+#Inheritance
+#-----------------------------------------
+class SavingsAccount(Account):
+    """Creates a savings account.
+       It inherits from the class Account.
+    """
