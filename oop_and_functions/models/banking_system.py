@@ -11,7 +11,7 @@ class Account:
         """Define the account holder and initial balance in account"""
         self.account_holder = account_holder
         self.initial_balance = initial_balance
-        self._account_counter += 1
+        Account._account_counter += 1
 
     def deposit(self, amount):
         """Records the  deposit of an amount of money"""
@@ -40,11 +40,9 @@ class Account:
 
 def validate_amount(amount):
     """Validate if amount is positive and reasonable (less than 1 million)"""
-   if amount < 0:
-       raise ValueError("Amount must be a positive number")
-   if amount > 1000000:
-       raise ValueError("Amount must be reasonable")
-   return amount
+    if amount < 0 or amount > 1000000:
+        raise ValueError("Amount must be a positive number and reasonable")
+    return amount
 
 def calculate_interest(principal, rate, time_years):
     """Calculate simple interest: P * R * T / 100"""
@@ -53,8 +51,7 @@ def calculate_interest(principal, rate, time_years):
 
 def format_currency(amount):
     """Format amount as currency (e.g., 1234.56 -> '$1,234.56')"""
-    # Your implementation here
-    pass
+    
 
 def generate_transaction_id():
     """Generate unique transaction ID using timestamp"""
