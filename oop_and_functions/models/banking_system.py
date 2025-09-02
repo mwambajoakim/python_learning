@@ -16,6 +16,7 @@ class Account:
     def deposit(self, amount):
         """Records the  deposit of an amount of money"""
         self.initial_balance += amount
+        print(f"{amount}")
 
     def withdraw(self, amount):
         """Records the withdrawal of an amount of money"""
