@@ -191,5 +191,7 @@ class Card:
         
     
     def get_card_info(self):
-        # Your implementation here
-        pass
+        return (
+            f"Account - {self.linked_account}\n"
+            f"Card Type - {self.card_type}"
+            )
