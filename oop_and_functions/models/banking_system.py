@@ -118,4 +118,9 @@ class SavingsAccount(Account):
 # Checking Account
 # ----------------------------------------------
 class CheckingAccount(Account):
-    
+
+    def __init__(self, account_holder):
+        super().__init__(account_holder)
+
+    def get_account_type(self):
+        return f"Account Type: Checking Account"
