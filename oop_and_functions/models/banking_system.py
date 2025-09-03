@@ -123,9 +123,12 @@ class CheckingAccount(Account):
         super().__init__(account_holder, initial_balance)
 
     def withdraw(self, amount):
-        if (self.initial_balance - amount) >= -500:
-                self.initial_balance -= amount
-                return True
+        diff = self.initial_balance - amount
+        if diff >= -500:
+            if diff <= 0:
+                self.initial_balance -= 2
+            self.initial_balance -= amount
+            return True
         return False
 
     def get_account_type(self):
