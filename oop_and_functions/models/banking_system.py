@@ -140,3 +140,13 @@ class CheckingAccount(Account):
 
     def get_account_type(self):
         return f"Account Type: Checking Account"
+
+# ----------------------------------------------------------
+# Business Account
+# ----------------------------------------------------------
+
+class BusinessAccount(CheckingAccount):
+
+    def __init__(self, account_holder, initial_balance, business_name):
+        super().__init__(account_holder, initial_balance)
+        self.business_name = business_name
