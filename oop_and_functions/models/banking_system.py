@@ -131,5 +131,12 @@ class CheckingAccount(Account):
             return True
         return False
 
+    def get_overdraft_available(self):
+        if self.initial_balance >= 0:
+            return 500
+        if self.initial_balance < 0:
+            return 500 + self.initial_balance
+    
+
     def get_account_type(self):
         return f"Account Type: Checking Account"
