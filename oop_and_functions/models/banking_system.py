@@ -119,8 +119,14 @@ class SavingsAccount(Account):
 # ----------------------------------------------
 class CheckingAccount(Account):
 
-    def __init__(self, account_holder):
-        super().__init__(account_holder)
+    def __init__(self, account_holder, initial_balance=0):
+        super().__init__(account_holder, initial_balance)
+
+    def withdraw(self, amount):
+        if (self.initial_balance - amount) >= -500:
+                self.initial_balance -= amount
+                return True
+        return False
 
     def get_account_type(self):
         return f"Account Type: Checking Account"
