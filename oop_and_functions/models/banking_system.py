@@ -112,3 +112,10 @@ class SavingsAccount(Account):
 
     def get_account_type(self):
         return f"Account Type: Savings Account"
+
+
+# ----------------------------------------------
+# Checking Account
+# ----------------------------------------------
+class CheckingAccount(Account):
+    
