@@ -150,3 +150,12 @@ class BusinessAccount(CheckingAccount):
     def __init__(self, account_holder, initial_balance=0, business_name):
         super().__init__(account_holder, initial_balance)
         self.business_name = business_name
+
+    def withdraw(self, amount):
+        diff = self.initial_balance - amount
+        if diff >= -2000:
+            if diff <= 0:
+                self.initial_balance -= 5
+            self.initial_balance -= amount
+            return True
+        return False
