@@ -164,3 +164,32 @@ class BusinessAccount(CheckingAccount):
             return 2000
         if self.initial_balance < 0:
             return 2000 + self.initial_balance
+
+    def get_account_type(self):
+        return f"Account Type: Business Account"
+
+    def get_account_info(self):
+        """Get the information of an account"""
+        return (
+            f"Account Holder - {self.account_holder}\n"
+            f"Account Balance - {self.initial_balance}\n"
+            f"Business Name - {self.business_name}"
+        )
+
+
+# ----------------------------------------------------------
+# Card Base Class
+# ----------------------------------------------------------
+
+
+class Card:
+    def __init__(self, linked_account, card_type):
+        self.linked_account = linked_account
+        self.card_type = card_type
+    
+    def make_purchase(self, amount, merchant):
+        
+    
+    def get_card_info(self):
+        # Your implementation here
+        pass
