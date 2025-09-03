@@ -147,6 +147,6 @@ class CheckingAccount(Account):
 
 class BusinessAccount(CheckingAccount):
 
-    def __init__(self, account_holder, initial_balance, business_name):
+    def __init__(self, account_holder, initial_balance=0, business_name):
         super().__init__(account_holder, initial_balance)
         self.business_name = business_name
