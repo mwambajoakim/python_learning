@@ -89,3 +89,18 @@ class SavingsAccount(Account):
     """Creates a savings account.
        It inherits from the class Account.
     """
+    monthly_interest = 0.5 / 100
+    
+    def __init__(self, account_holder, initial_balance=100):
+        super().__init__(account_holder)
+        self.initial_balance = initial_balance
+
+    def withdraw(self, amount):
+        if (self.initial_balance - amount) < self.initial_balance:
+            return False
+        self.initial_balance -= amount
+        return True
+
+    def apply_monthly_interest(self):
+       intr = SavingsAccount.monthly_interest * self.initial_balance
+       return self.initial_balance + intr
