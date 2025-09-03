@@ -136,7 +136,6 @@ class CheckingAccount(Account):
             return 500
         if self.initial_balance < 0:
             return 500 + self.initial_balance
-    
 
     def get_account_type(self):
         return f"Account Type: Checking Account"
@@ -147,7 +146,7 @@ class CheckingAccount(Account):
 
 class BusinessAccount(CheckingAccount):
 
-    def __init__(self, account_holder, initial_balance=0, business_name):
+    def __init__(self, account_holder, business_name, initial_balance=0):
         super().__init__(account_holder, initial_balance)
         self.business_name = business_name
 
@@ -159,3 +158,9 @@ class BusinessAccount(CheckingAccount):
             self.initial_balance -= amount
             return True
         return False
+
+    def get_overdraft_available(self):
+        if self.initial_balance >= 0:
+            return 2000
+        if self.initial_balance < 0:
+            return 2000 + self.initial_balance
