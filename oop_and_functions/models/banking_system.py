@@ -180,16 +180,32 @@ class BusinessAccount(CheckingAccount):
 # ----------------------------------------------------------
 # Card Base Class
 # ----------------------------------------------------------
+import random
 
 
 class Card:
     def __init__(self, linked_account, card_type):
         self.linked_account = linked_account
         self.card_type = card_type
-    
+        self.card_number = f"{random.randint(10**15, 10**16 - 1)}"
+        self.is_active = True
+        self.transactions = []
+
     def make_purchase(self, amount, merchant):
-        
-    
+        if not self.is_active:
+            raise ValueError("The card is inactive")
+        if amount <= 0:
+            raise ValueError("The amount must be positive")
+
+        self.linked_account.withdraw(amount, merchant)
+        transaction = {
+            "amount": amount,
+            "merchant": merchant,
+            "date": datetime.datetime.now()
+            }
+        self.transactions.append(transaction)
+            
+
     def get_card_info(self):
         return (
             f"Account - {self.linked_account}\n"
