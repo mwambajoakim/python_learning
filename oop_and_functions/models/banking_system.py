@@ -35,9 +35,10 @@ class Account:
         Account Holder - {self.account_holder}
         Account Balance - {self.initial_balance}
         """
-#-----------------------------------
+# -----------------------------------
 # Standalone functions
-#-----------------------------------
+# -----------------------------------
+
 
 def validate_amount(amount):
     """Validate if amount is positive and reasonable (less than 1 million)
@@ -52,6 +53,7 @@ def validate_amount(amount):
         raise ValueError("Amount must be a positive number and reasonable")
     return amount
 
+
 def calculate_interest(principal, rate, time_years):
     """Calculate simple interest: P * R * T / 100
 
@@ -62,6 +64,7 @@ def calculate_interest(principal, rate, time_years):
               The simple interest on the principal amount.
     """
     return (principal * rate) * time_years / 100
+
 
 def format_currency(amount):
     """Format amount as currency (e.g., 1234.56 -> '$1,234.56')
@@ -74,6 +77,7 @@ def format_currency(amount):
     """
     return f"${amount:,}"
 
+
 def generate_transaction_id():
     """Generate unique transaction ID using timestamp
 
@@ -82,15 +86,16 @@ def generate_transaction_id():
     """
     return time.ctime()
 
-#------------------------------------------
-#Inheritance
-#-----------------------------------------
+
+# ------------------------------------------
+# Inheritance
+# -----------------------------------------
 class SavingsAccount(Account):
     """Creates a savings account.
        It inherits from the class Account.
     """
     monthly_interest = 0.5 / 100
-    
+
     def __init__(self, account_holder, initial_balance=100):
         super().__init__(account_holder)
         self.initial_balance = initial_balance
@@ -102,8 +107,8 @@ class SavingsAccount(Account):
         return True
 
     def apply_monthly_interest(self):
-       intr = SavingsAccount.monthly_interest * self.initial_balance
-       return self.initial_balance + intr
+        intr = SavingsAccount.monthly_interest * self.initial_balance
+        return self.initial_balance + intr
 
     def get_account_type(self):
         return f"Account Type: Savings Account"
