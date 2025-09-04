@@ -345,3 +345,33 @@ class CreditCard(Card):
                 "date": datetime.datetime.now()
             }
             self.transactions.append(transaction)
+
+# ----------------------------------------------------
+# Account Management Functions
+# ----------------------------------------------------
+def create_account(account_type, holder_name, initial_deposit=0):
+    """Factory function to create different account types"""
+    accounts = {
+        "savings": SavingsAccount,
+        "checking": CheckingAccount,
+        "business": BusinessAccount
+        }
+    account = accounts.get(account_type.lower())
+    if account is None:
+        raise ValueError("Enter a valid account type")
+    return account(holder_name, initial_deposit)
+
+def transfer_funds(from_account, to_account, amount):
+    """Transfer money between accounts"""
+    # Your implementation here
+    pass
+
+def generate_account_statement(account, start_date=None, end_date=None):
+    """Generate formatted account statement"""
+    # Your implementation here
+    pass
+
+def find_accounts_by_holder(accounts_list, holder_name):
+    """Find all accounts belonging to a specific holder"""
+    # Your implementation here
+    pass
