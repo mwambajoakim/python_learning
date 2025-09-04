@@ -117,7 +117,8 @@ class SavingsAccount(Account):
                   True if transaction is valid.
                   False if transaction is invalid.
         """
-        if (self.initial_balance - amount) < self.initial_balance:
+        initial_balance_difference = self.initial_balance - amount
+        if initial_balance_difference < self.initial_balance:
             return False
         self.initial_balance -= amount
         return True
@@ -137,6 +138,8 @@ class SavingsAccount(Account):
 # ----------------------------------------------
 class CheckingAccount(Account):
 
+    overdraft_amount = 500
+    
     def __init__(self, account_holder, initial_balance=0):
         """Initialize a Checking Account"""
         super().__init__(account_holder, initial_balance)
@@ -151,10 +154,11 @@ class CheckingAccount(Account):
                   True if transaction is valid.
                   False if transaction is invalid.
         """
-        diff = self.initial_balance - amount
-        if diff >= -500:
-            if diff <= 0:
-                self.initial_balance -= 2
+        balance_amount_difference = self.initial_balance - amount
+        overdraft_deduction = 2
+        if balance_amount_difference >= -CheckingAccount.overdraft_amount:
+            if balance_amount_difference <= 0:
+                self.initial_balance -= overdraft_deduction
             self.initial_balance -= amount
             return True
         return False
@@ -162,9 +166,9 @@ class CheckingAccount(Account):
     def get_overdraft_available(self):
         """Return amount of overdraft available"""
         if self.initial_balance >= 0:
-            return 500
+            return CheckingAccount.overdraft_amount
         if self.initial_balance < 0:
-            return 500 + self.initial_balance
+            return CheckingAccount.overdraft_amount + self.initial_balance
 
     def get_account_type(self):
         """Return the account type"""
@@ -177,6 +181,8 @@ class CheckingAccount(Account):
 
 class BusinessAccount(CheckingAccount):
 
+    overdraft_amount = 2000
+    
     def __init__(self, account_holder, business_name, initial_balance=0):
         """Initialize a Business Account"""
         super().__init__(account_holder, initial_balance)
@@ -192,10 +198,11 @@ class BusinessAccount(CheckingAccount):
                   True if transaction is valid.
                   False if transaction is invalid.
         """
-        diff = self.initial_balance - amount
-        if diff >= -2000:
-            if diff <= 0:
-                self.initial_balance -= 5
+        balance_amount_difference = self.initial_balance - amount
+        overdraft_deduction  = 5
+        if balance_amount_difference >= -BusinessAccount.overdraft_amount:
+            if balance_amount_difference <= 0:
+                self.initial_balance -= overdraft_deduction
             self.initial_balance -= amount
             return True
         return False
@@ -203,9 +210,9 @@ class BusinessAccount(CheckingAccount):
     def get_overdraft_available(self):
         """Return the amount of overdraft available"""
         if self.initial_balance >= 0:
-            return 2000
+            return BusinessAccount.overdraft_amount
         if self.initial_balance < 0:
-            return 2000 + self.initial_balance
+            return BusinessAccount.overdraft_amount + self.initial_balance
 
     def get_account_type(self):
         """Return the account type"""
@@ -279,11 +286,6 @@ class Card:
 
 
 class DebitCard(Card):
-    def __init__(self, linked_account, card_type):
-        """Initialize a Debit Card"""
-        super().__init__(linked_account, card_type)
-        self.is_active = True
-        self.transactions = []
 
     def make_purchase(self, amount, merchant):
         """Make a purchase through a merchant
@@ -300,13 +302,13 @@ class DebitCard(Card):
         if amount <= 0:
             raise ValueError("The amount must be positive")
         if amount <= 1000:
-            self.linked_account.withdraw(amount)
-            transaction = {
-                "amount": amount,
-                "merchant": merchant,
-                "date": datetime.datetime.now()
-            }
-            self.transactions.append(transaction)
+            if self.linked_account.withdraw(amount):
+                transaction = {
+                    "amount": amount,
+                    "merchant": merchant,
+                    "date": datetime.datetime.now()
+                }
+                self.transactions.append(transaction)
 
 # ----------------------------------------------------------------
 # Credit Card
@@ -316,12 +318,6 @@ class DebitCard(Card):
 class CreditCard(Card):
 
     credit_limit = 5000
-
-    def __init__(self, linked_account, card_type):
-        """Initialize a Credit Card"""
-        super().__init__(linked_account, card_type)
-        self.is_active = True
-        self.transactions = []
 
     def make_purchase(self, amount, merchant):
         """Make a purchase through a merchant
@@ -338,13 +334,13 @@ class CreditCard(Card):
         if amount <= 0:
             raise ValueError("The amount must be positive")
         if amount < CreditCard.credit_limit:
-            self.linked_account.withdraw(amount)
-            transaction = {
-                "amount": amount,
-                "merchant": merchant,
-                "date": datetime.datetime.now()
-            }
-            self.transactions.append(transaction)
+            if self.linked_account.withdraw(amount):
+                transaction = {
+                    "amount": amount,
+                    "merchant": merchant,
+                    "date": datetime.datetime.now()
+                }
+                self.transactions.append(transaction)
 
 # ----------------------------------------------------
 # Account Management Functions
