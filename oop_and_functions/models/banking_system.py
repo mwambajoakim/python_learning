@@ -181,6 +181,7 @@ class BusinessAccount(CheckingAccount):
 # Card Base Class
 # ----------------------------------------------------------
 import random
+import datetime
 
 
 class Card:
@@ -197,7 +198,7 @@ class Card:
         if amount <= 0:
             raise ValueError("The amount must be positive")
 
-        self.linked_account.withdraw(amount, merchant)
+        self.linked_account.withdraw(amount)
         transaction = {
             "amount": amount,
             "merchant": merchant,
@@ -216,11 +217,13 @@ class Card:
 # ---------------------------------------------------------
 # Debit Card
 # ---------------------------------------------------------
-
+import datetime
 
 class DebitCard(Card):
     def __init__(self, linked_account, card_type):
         super().__init__(linked_account, card_type)
+        self.is_active = True
+        self.transactions = []
 
     def make_purchase(self, amount, merchant):
         if not self.is_active:
@@ -228,7 +231,7 @@ class DebitCard(Card):
         if amount <= 0:
             raise ValueError("The amount must be positive")
         if amount <= 1000:
-             self.linked_account.withdraw(amount, merchant)
+             self.linked_account.withdraw(amount)
              transaction = {
                  "amount": amount,
                  "merchant": merchant,
