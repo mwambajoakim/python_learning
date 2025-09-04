@@ -93,24 +93,40 @@ def generate_transaction_id():
 class SavingsAccount(Account):
     """Creates a savings account.
        It inherits from the class Account.
+
+      Args:
+           account_holder: Account owner.
+           initial_balance: Amount in the account.
     """
     monthly_interest = 0.5 / 100
 
     def __init__(self, account_holder, initial_balance=100):
+        """Initialize a Savings Account"""
         super().__init__(account_holder)
         self.initial_balance = initial_balance
 
     def withdraw(self, amount):
+        """Withdraw an amount from Savings Account
+
+           Args:
+                amount: Amount of money to withdraw.
+
+           Return:
+                  True if transaction is valid.
+                  False if transaction is invalid.
+        """
         if (self.initial_balance - amount) < self.initial_balance:
             return False
         self.initial_balance -= amount
         return True
 
     def apply_monthly_interest(self):
+        """Apply a monthly interest to balance in account"""
         intr = SavingsAccount.monthly_interest * self.initial_balance
         return self.initial_balance + intr
 
     def get_account_type(self):
+        """Return the account type"""
         return f"Account Type: Savings Account"
 
 
@@ -120,9 +136,19 @@ class SavingsAccount(Account):
 class CheckingAccount(Account):
 
     def __init__(self, account_holder, initial_balance=0):
+        """Initialize a Checking Account"""
         super().__init__(account_holder, initial_balance)
 
     def withdraw(self, amount):
+         """Withdraw an amount from Savings Account
+
+           Args:
+                amount: Amount of money to withdraw.
+
+           Return:
+                  True if transaction is valid.
+                  False if transaction is invalid.
+        """
         diff = self.initial_balance - amount
         if diff >= -500:
             if diff <= 0:
@@ -132,12 +158,14 @@ class CheckingAccount(Account):
         return False
 
     def get_overdraft_available(self):
+        """Return amount of overdraft available"""
         if self.initial_balance >= 0:
             return 500
         if self.initial_balance < 0:
             return 500 + self.initial_balance
 
     def get_account_type(self):
+         """Return the account type"""
         return f"Account Type: Checking Account"
 
 # ----------------------------------------------------------
@@ -147,10 +175,20 @@ class CheckingAccount(Account):
 class BusinessAccount(CheckingAccount):
 
     def __init__(self, account_holder, business_name, initial_balance=0):
+        """Initialize a Business Account"""
         super().__init__(account_holder, initial_balance)
         self.business_name = business_name
 
     def withdraw(self, amount):
+         """Withdraw an amount from Savings Account
+
+           Args:
+                amount: Amount of money to withdraw.
+
+           Return:
+                  True if transaction is valid.
+                  False if transaction is invalid.
+        """
         diff = self.initial_balance - amount
         if diff >= -2000:
             if diff <= 0:
@@ -160,12 +198,14 @@ class BusinessAccount(CheckingAccount):
         return False
 
     def get_overdraft_available(self):
+        """Return the amount of overdraft available"""
         if self.initial_balance >= 0:
             return 2000
         if self.initial_balance < 0:
             return 2000 + self.initial_balance
 
     def get_account_type(self):
+         """Return the account type"""
         return f"Account Type: Business Account"
 
     def get_account_info(self):
@@ -185,6 +225,15 @@ import datetime
 
 
 class Card:
+    """Initialize a card
+
+       Args:
+            linked_account: Account the card is associated to.
+            card_type: If card is active or not.
+
+       Return:
+              A list of transactions done for each card
+    """
     def __init__(self, linked_account, card_type):
         self.linked_account = linked_account
         self.card_type = card_type
@@ -193,6 +242,15 @@ class Card:
         self.transactions = []
 
     def make_purchase(self, amount, merchant):
+        """Make a purchase through a merchant
+
+           Args:
+                amount: Amount for the purchase.
+                merchant: Merchant to complete transaction.
+
+           Return:
+                  List of transactions made.
+        """
         if not self.is_active:
             raise ValueError("The card is inactive")
         if amount <= 0:
@@ -208,6 +266,7 @@ class Card:
             
 
     def get_card_info(self):
+        """Return card information"""
         return (
             f"Account - {self.linked_account}\n"
             f"Card Type - {self.card_type}"
@@ -221,11 +280,21 @@ import datetime
 
 class DebitCard(Card):
     def __init__(self, linked_account, card_type):
+        """Initialize a Debit Card"""
         super().__init__(linked_account, card_type)
         self.is_active = True
         self.transactions = []
 
     def make_purchase(self, amount, merchant):
+        """Make a purchase through a merchant
+
+           Args:
+                amount: Amount for the purchase.
+                merchant: Merchant to complete transaction.
+
+           Return:
+                  List of transactions made.
+        """
         if not self.is_active:
             raise ValueError("The card is inactive")
         if amount <= 0:
@@ -251,11 +320,21 @@ class CreditCard(Card):
     credit_limit = 5000
     
     def __init__(self, linked_account, card_type):
+        """Initialize a Credit Card"""
         super().__init__(linked_account, card_type)
         self.is_active = True
         self.transactions = []
 
      def make_purchase(self, amount, merchant):
+         """Make a purchase through a merchant
+
+           Args:
+                amount: Amount for the purchase.
+                merchant: Merchant to complete transaction.
+
+           Return:
+                  List of transactions made.
+        """
         if not self.is_active:
             raise ValueError("The card is inactive")
         if amount <= 0:
