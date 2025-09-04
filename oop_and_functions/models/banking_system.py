@@ -124,8 +124,8 @@ class SavingsAccount(Account):
 
     def apply_monthly_interest(self):
         """Apply a monthly interest to balance in account"""
-        intr = SavingsAccount.monthly_interest * self.initial_balance
-        return self.initial_balance + intr
+        monthl_interest = SavingsAccount.monthly_interest * self.initial_balance
+        return self.initial_balance + monthly_interest
 
     def get_account_type(self):
         """Return the account type"""
