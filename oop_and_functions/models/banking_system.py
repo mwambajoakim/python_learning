@@ -238,3 +238,33 @@ class DebitCard(Card):
                  "date": datetime.datetime.now()
              }
              self.transactions.append(transaction)
+
+             
+# ----------------------------------------------------------------
+# Credit Card
+# ----------------------------------------------------------------
+import datetime
+
+
+class CreditCard(Card):
+
+    credit_limit = 5000
+    
+    def __init__(self, linked_account, card_type):
+        super().__init__(linked_account, card_type)
+        self.is_active = True
+        self.transactions = []
+
+     def make_purchase(self, amount, merchant):
+        if not self.is_active:
+            raise ValueError("The card is inactive")
+        if amount <= 0:
+            raise ValueError("The amount must be positive")
+        if amount < CreditCard.credit_limit:
+            self.linked_account.withdraw(amount)
+            transaction = {
+                "amount": amount,
+                "merchant": merchant,
+                "date": datetime.datetime.now()
+            }
+            self.transactions.append(transaction)
