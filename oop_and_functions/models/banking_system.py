@@ -356,10 +356,10 @@ def create_account(account_type, holder_name, initial_deposit=0):
         "checking": CheckingAccount,
         "business": BusinessAccount
         }
-    account = accounts.get(account_type.lower())
-    if account is None:
+    AccountClass = accounts.get(account_type.lower())
+    if AccountClass is None:
         raise ValueError("Enter a valid account type")
-    return account(holder_name, initial_deposit)
+    return AccountClass(holder_name, initial_deposit)
 
 def transfer_funds(from_account, to_account, amount):
     """Transfer money between accounts"""
