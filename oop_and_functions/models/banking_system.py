@@ -221,3 +221,17 @@ class Card:
 class DebitCard(Card):
     def __init__(self, linked_account, card_type):
         super().__init__(linked_account, card_type)
+
+    def make_purchase(self, amount, merchant):
+        if not self.is_active:
+            raise ValueError("The card is inactive")
+        if amount <= 0:
+            raise ValueError("The amount must be positive")
+        if amount <= 1000:
+             self.linked_account.withdraw(amount, merchant)
+             transaction = {
+                 "amount": amount,
+                 "merchant": merchant,
+                 "date": datetime.datetime.now()
+             }
+             self.transactions.append(transaction)
