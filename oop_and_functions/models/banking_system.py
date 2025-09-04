@@ -139,10 +139,6 @@ class SavingsAccount(Account):
 class CheckingAccount(Account):
 
     overdraft_amount = 500
-    
-    def __init__(self, account_holder, initial_balance=0):
-        """Initialize a Checking Account"""
-        super().__init__(account_holder, initial_balance)
 
     def withdraw(self, amount):
         """Withdraw an amount from Savings Account
