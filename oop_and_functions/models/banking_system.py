@@ -211,3 +211,13 @@ class Card:
             f"Account - {self.linked_account}\n"
             f"Card Type - {self.card_type}"
             )
+
+
+# ---------------------------------------------------------
+# Debit Card
+# ---------------------------------------------------------
+
+
+class DebitCard(Card):
+    def __init__(self, linked_account, card_type):
+        super().__init__(linked_account, card_type)
