@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """A banking system that does all operations"""
 import time
+import random
+import datetime
 
 
 class Account:
@@ -140,7 +142,7 @@ class CheckingAccount(Account):
         super().__init__(account_holder, initial_balance)
 
     def withdraw(self, amount):
-         """Withdraw an amount from Savings Account
+        """Withdraw an amount from Savings Account
 
            Args:
                 amount: Amount of money to withdraw.
@@ -165,12 +167,13 @@ class CheckingAccount(Account):
             return 500 + self.initial_balance
 
     def get_account_type(self):
-         """Return the account type"""
+        """Return the account type"""
         return f"Account Type: Checking Account"
 
 # ----------------------------------------------------------
 # Business Account
 # ----------------------------------------------------------
+
 
 class BusinessAccount(CheckingAccount):
 
@@ -180,7 +183,7 @@ class BusinessAccount(CheckingAccount):
         self.business_name = business_name
 
     def withdraw(self, amount):
-         """Withdraw an amount from Savings Account
+        """Withdraw an amount from Savings Account
 
            Args:
                 amount: Amount of money to withdraw.
@@ -205,7 +208,7 @@ class BusinessAccount(CheckingAccount):
             return 2000 + self.initial_balance
 
     def get_account_type(self):
-         """Return the account type"""
+        """Return the account type"""
         return f"Account Type: Business Account"
 
     def get_account_info(self):
@@ -220,8 +223,6 @@ class BusinessAccount(CheckingAccount):
 # ----------------------------------------------------------
 # Card Base Class
 # ----------------------------------------------------------
-import random
-import datetime
 
 
 class Card:
@@ -263,7 +264,6 @@ class Card:
             "date": datetime.datetime.now()
             }
         self.transactions.append(transaction)
-            
 
     def get_card_info(self):
         """Return card information"""
@@ -276,7 +276,7 @@ class Card:
 # ---------------------------------------------------------
 # Debit Card
 # ---------------------------------------------------------
-import datetime
+
 
 class DebitCard(Card):
     def __init__(self, linked_account, card_type):
@@ -300,33 +300,31 @@ class DebitCard(Card):
         if amount <= 0:
             raise ValueError("The amount must be positive")
         if amount <= 1000:
-             self.linked_account.withdraw(amount)
-             transaction = {
-                 "amount": amount,
-                 "merchant": merchant,
-                 "date": datetime.datetime.now()
-             }
-             self.transactions.append(transaction)
+            self.linked_account.withdraw(amount)
+            transaction = {
+                "amount": amount,
+                "merchant": merchant,
+                "date": datetime.datetime.now()
+            }
+            self.transactions.append(transaction)
 
-             
 # ----------------------------------------------------------------
 # Credit Card
 # ----------------------------------------------------------------
-import datetime
 
 
 class CreditCard(Card):
 
     credit_limit = 5000
-    
+
     def __init__(self, linked_account, card_type):
         """Initialize a Credit Card"""
         super().__init__(linked_account, card_type)
         self.is_active = True
         self.transactions = []
 
-     def make_purchase(self, amount, merchant):
-         """Make a purchase through a merchant
+    def make_purchase(self, amount, merchant):
+        """Make a purchase through a merchant
 
            Args:
                 amount: Amount for the purchase.
