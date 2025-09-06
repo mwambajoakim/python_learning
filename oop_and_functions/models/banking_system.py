@@ -14,16 +14,29 @@ class Account:
         self.account_holder = account_holder
         self.initial_balance = initial_balance
         Account._account_counter += 1
+        self.transactions = []
 
     def deposit(self, amount):
         """Records the  deposit of an amount of money"""
         self.initial_balance += amount
-        print(f"{amount}")
+        transaction = {
+            "type": "deposit",
+            "amount": amount,
+            "date": datetime.datetime.now()
+            }
+        self.transactions.append(transaction)
+        return amount
 
     def withdraw(self, amount):
         """Records the withdrawal of an amount of money"""
         if self.initial_balance > amount:
             self.initial_balance -= amount
+            transaction = {
+                "type": "withdrawal",
+                "amount": amount,
+                "date": datetime.datetime.now()
+            }
+            self.transactions.append(transaction)
             return True
         return False
 
@@ -118,7 +131,7 @@ class SavingsAccount(Account):
                   False if transaction is invalid.
         """
         initial_balance_difference = self.initial_balance - amount
-        if initial_balance_difference < self.initial_balance:
+        if initial_balance_difference > self.initial_balance:
             return False
         self.initial_balance -= amount
         return True
@@ -355,8 +368,9 @@ def create_account(account_type, holder_name, initial_deposit=0):
 
 def transfer_funds(from_account, to_account, amount):
     """Transfer money between accounts"""
-    # Your implementation here
-    pass
+    from_account.withdraw(amount)
+    to_account.deposit(amount)
+    print("Your transaction was successful")
 
 def generate_account_statement(account, start_date=None, end_date=None):
     """Generate formatted account statement"""
@@ -367,3 +381,24 @@ def find_accounts_by_holder(accounts_list, holder_name):
     """Find all accounts belonging to a specific holder"""
     # Your implementation here
     pass
+
+
+# -----------------------------------------------------------
+# Banking System Class
+# -----------------------------------------------------------
+
+class BankingSystem:
+    def __init__(self, bank_name):
+       self.bank_name = bank_name
+    
+    def add_account(self, account):
+        # Your implementation here
+        pass
+    
+    def get_total_deposits(self):
+        # Your implementation here
+        pass
+    
+    def get_accounts_summary(self):
+        # Your implementation here
+        pass
