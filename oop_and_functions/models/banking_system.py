@@ -420,6 +420,11 @@ def find_accounts_by_holder(accounts_list, holder_name):
 class BankingSystem:
     def __init__(self, bank_name):
        self.bank_name = bank_name
+       self.accounts = {
+           "Savings Account": SavingsAccount,
+           "Checking Account": CheckingAccount,
+           "Business Account": BusinessAccount
+           }
     
     def add_account(self, account):
         # Your implementation here
