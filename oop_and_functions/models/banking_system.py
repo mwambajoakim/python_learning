@@ -434,5 +434,12 @@ class BankingSystem:
         return deposits
     
     def get_accounts_summary(self):
-        # Your implementation here
-        pass
+        summary = []
+        for account in self.accounts:
+            summary.append({
+                "Account Holder": account.account_holder,
+                "Account Number": account._account_counter,
+                "Account Balance": account.initial_balance,
+                "Number of transactions": len(account.transactions)
+                })
+        return summary
