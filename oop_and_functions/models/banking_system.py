@@ -20,7 +20,7 @@ class Account:
         """Records the  deposit of an amount of money"""
         self.initial_balance += amount
         transaction = {
-            "type": "deposit",
+            "transaction_type": "deposit",
             "amount": amount,
             "date": datetime.datetime.now()
             }
@@ -130,7 +130,7 @@ class SavingsAccount(Account):
             return False
         self.initial_balance -= amount
         transaction = {
-            "type": "withdrawal",
+            "transaction_type": "withdrawal",
             "amount": amount,
             "date": datetime.datetime.now()
             }
@@ -171,7 +171,7 @@ class CheckingAccount(Account):
                 self.initial_balance -= overdraft_deduction
             self.initial_balance -= amount
             transaction = {
-            "type": "withdrawal",
+            "transaction_type": "withdrawal",
             "amount": amount,
             "date": datetime.datetime.now()
             }
@@ -221,7 +221,7 @@ class BusinessAccount(CheckingAccount):
                 self.initial_balance -= overdraft_deduction
             self.initial_balance -= amount
             transaction = {
-            "type": "withdrawal",
+            "transaction_type": "withdrawal",
             "amount": amount,
             "date": datetime.datetime.now()
             }
@@ -387,8 +387,25 @@ def transfer_funds(from_account, to_account, amount):
 
 def generate_account_statement(account, start_date=None, end_date=None):
     """Generate formatted account statement"""
-    # Your implementation here
-    pass
+    transactions = account.transactions
+    if start_date:
+        transaction = [t for t in transactions if t["date"] >= start_date]
+    if end_date:
+        transaction = [t for t in transactions if t["date"] <= end_date]
+
+    statement_lines = [
+        f"Account statement for {account.holder_name}",
+        f"Account number: {account._account_counter}",
+        f"Account Balance: {account.initial_balance}"
+        "-" * 40
+        f"{'Transaction Type':<20} {'Amount':<15} {'Date':<10}"
+        ]
+    for t in transaction:
+        statement_lines.append(
+            f"{t["transaction_type"]:<20} {t["amount"]:<15} {t["date"p]:<10.2}"
+            )
+    return "\n".join(statement_lines)
+
 
 def find_accounts_by_holder(accounts_list, holder_name):
     """Find all accounts belonging to a specific holder"""
