@@ -420,19 +420,15 @@ def find_accounts_by_holder(accounts_list, holder_name):
 class BankingSystem:
     def __init__(self, bank_name):
        self.bank_name = bank_name
-       self.accounts = {
-           "Savings Account": SavingsAccount,
-           "Checking Account": CheckingAccount,
-           "Business Account": BusinessAccount
-           }
+       self.accounts = []
     
     def add_account(self, account):
-        # Your implementation here
-        pass
+        self.accounts.append(account)
     
     def get_total_deposits(self):
-        # Your implementation here
-        pass
+        for i in range(len(self.accounts)):
+            deposits += self.accounts[i].transactions["deposit"]
+        return deposits
     
     def get_accounts_summary(self):
         # Your implementation here
