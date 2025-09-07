@@ -394,22 +394,23 @@ def generate_account_statement(account, start_date=None, end_date=None):
         transaction = [t for t in transactions if t["date"] <= end_date]
 
     statement_lines = [
-        f"Account statement for {account.holder_name}",
+        f"Account statement for {account.account_holder}",
         f"Account number: {account._account_counter}",
-        f"Account Balance: {account.initial_balance}"
+        f"Account Balance: {account.initial_balance}",
+        "-" * 40,
+        f"{'Transaction Type':<20} {'Amount':<15} {'Date':<10}",
         "-" * 40
-        f"{'Transaction Type':<20} {'Amount':<15} {'Date':<10}"
         ]
     for t in transaction:
         statement_lines.append(
-            f"{t["transaction_type"]:<20} {t["amount"]:<15} {t["date"p]:<10.2}"
+            f"{t['transaction_type']:<20} {t['amount']:<15} {t['date'].strftime("%Y-%m-%d %H:%M:%S"):<10.2}"
             )
     return "\n".join(statement_lines)
 
 
 def find_accounts_by_holder(accounts_list, holder_name):
     """Find all accounts belonging to a specific holder"""
-    return [account for account in accounts_list if account.holder_name.lower() == holder_name.lower()]
+    return [account for account in accounts_list if account.account_holder.lower() == holder_name.lower()]
 
 
 # -----------------------------------------------------------
