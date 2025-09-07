@@ -379,8 +379,7 @@ def generate_account_statement(account, start_date=None, end_date=None):
 
 def find_accounts_by_holder(accounts_list, holder_name):
     """Find all accounts belonging to a specific holder"""
-    # Your implementation here
-    pass
+    return [account for account in accounts_list if account.holder_name.lower() == holder_name.lower()]
 
 
 # -----------------------------------------------------------
@@ -401,4 +400,4 @@ class BankingSystem:
     
     def get_accounts_summary(self):
         # Your implementation here
-        pass
+
