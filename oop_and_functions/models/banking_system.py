@@ -426,8 +426,11 @@ class BankingSystem:
         self.accounts.append(account)
     
     def get_total_deposits(self):
-        for i in range(len(self.accounts)):
-            deposits += self.accounts[i].transactions["deposit"]
+        deposits = 0
+        for account in self.accounts:
+            for transaction in account.transactions:
+                if transaction["transaction_type"] == "deposit":
+                    deposits += transaction["amount"]
         return deposits
     
     def get_accounts_summary(self):
