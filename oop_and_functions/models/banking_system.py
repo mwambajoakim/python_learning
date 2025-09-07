@@ -31,11 +31,6 @@ class Account:
         """Records the withdrawal of an amount of money"""
         if self.initial_balance > amount:
             self.initial_balance -= amount
-            transaction = {
-                "type": "withdrawal",
-                "amount": amount,
-                "date": datetime.datetime.now()
-            }
             self.transactions.append(transaction)
             return True
         return False
@@ -134,6 +129,12 @@ class SavingsAccount(Account):
         if initial_balance_difference > self.initial_balance:
             return False
         self.initial_balance -= amount
+        transaction = {
+            "type": "withdrawal",
+            "amount": amount,
+            "date": datetime.datetime.now()
+            }
+        self.transactions.append(transaction)
         return True
 
     def apply_monthly_interest(self):
@@ -169,6 +170,12 @@ class CheckingAccount(Account):
             if balance_amount_difference <= 0:
                 self.initial_balance -= overdraft_deduction
             self.initial_balance -= amount
+            transaction = {
+            "type": "withdrawal",
+            "amount": amount,
+            "date": datetime.datetime.now()
+            }
+            self.transactions.append(transaction)
             return True
         return False
 
@@ -213,6 +220,12 @@ class BusinessAccount(CheckingAccount):
             if balance_amount_difference <= 0:
                 self.initial_balance -= overdraft_deduction
             self.initial_balance -= amount
+            transaction = {
+            "type": "withdrawal",
+            "amount": amount,
+            "date": datetime.datetime.now()
+            }
+            self.transactions.append(transaction)
             return True
         return False
 
@@ -400,4 +413,4 @@ class BankingSystem:
     
     def get_accounts_summary(self):
         # Your implementation here
-
+        pass
