@@ -95,7 +95,7 @@ class TestBusinessAccount(unittest.TestCase):
         overdraft_amount = self.business.get_overdraft_available()
         self.assertEqual(overdraft_amount, 1595)
 
-class TestValidateAmount(unittest.TestCase):
+class StandAloneFunctions(unittest.TestCase):
     def test_amount_less_than_zero(self):
         with self.assertRaises(ValueError) as err:
             validate_amount(-900)
@@ -106,12 +106,39 @@ class TestValidateAmount(unittest.TestCase):
             validate_amount(1000001)
             self.assertEqual(err.exception, "Amount must be a positive number and reasonable")
 
-class TestCalculateInterest(unittest.TestCase):
     def test_simple_interest(self):
         simple_interest = calculate_interest(100, 2, 10)
         self.assertEqual(simple_interest, 20)
 
-class TestFormatCurrency(unittest.TestCase):
     def test_currency_format(self):
         formatted_amount = format_currency(1000000)
-        self.assertEqual(formatted_amount, 1,000,000)
+        self.assertEqual(formatted_amount, "$1,000,000")
+   
+
+class TestCards(unittest.TestCase):
+    def setUp(self):
+        self.account = Account("Joe", 2000)
+        self.debit = DebitCard(self.account, "Debit")
+        self.credit = CreditCard(self.account, "Credit")
+
+    def test_debit_purchase_success(self):
+        self.debit.make_purchase(500, "supermarket")
+        self.assertEqual(self.debit.transactions[-1]["merchant"], "supermarket")
+
+    def test_debit_purchase_fail(self):
+        with self.assertRaises(ValueError):
+            self.debit.make_purchase(1500, "mall")
+
+    def test_credit_purchase_success(self):
+        self.credit.make_purchase(3000, "shop")
+        self.assertEqual(len(self.credit.transactions), 1)
+        self.assertEqual(self.credit.transactions[-1]["merchant"], "shop")
+
+    def test_credit_purchase_fail(self):
+        with self.assertRaises(ValueError):
+            self.credit.make_purchase(6000, "ship")
+
+    def test_inactive_card(self):
+        self.debit.is_active = False
+        with self.assertRaises(ValueError):
+            self.debit.make_purchase(1000, "shop")
