@@ -142,3 +142,24 @@ class TestCards(unittest.TestCase):
         self.debit.is_active = False
         with self.assertRaises(ValueError):
             self.debit.make_purchase(1000, "shop")
+
+
+class TestAccountManagementFunctions(unittest.TestCase):
+    def setUp(self):
+        self.savings = SavingsAccount("Joe", 2000)
+        self.business = BusinessAccount("Joe", "Mwamba Ltd", 3000)
+
+    def test_create_account_function(self):
+        checking = create_account("checking", "Mwamba", 500)
+        self.assertEqual(checking.get_balance(), 500)
+        self.assertEqual(checking.account_holder, "Mwamba")
+
+    def test_transfer_funds_function(self):
+        transfer_funds(self.savings, self.business, 500)
+        self.assertEqual(self.savings.get_balance(), 1500)
+        self.assertEqual(self.business.get_balance(), 3500)
+
+    def test_get_account_statement(self):
+        self.savings.deposit(200)
+        stmt = generate_account_statement(self.savings)
+        self.assertIn("Account statement for Joe", stmt)
