@@ -6,7 +6,8 @@ import time
 from models.banking_system import (
     Account, SavingsAccount, BusinessAccount, CheckingAccount, validate_amount,
     calculate_interest, format_currency, generate_transaction_id, Card,
-    DebitCard, CreditCard, create_account, transfer_funds, generate_account_statement,
+    DebitCard, CreditCard, create_account, transfer_funds,
+    generate_account_statement,
     find_accounts_by_holder, BankingSystem
     )
 
@@ -44,8 +45,9 @@ class TestSavingsAccount(unittest.TestCase):
 
     def test_savings_deposit(self):
         self.savings.deposit(500)
+        transaction_type = self.savings.transactions[-1]["transaction_type"]
         self.assertEqual(self.savings.get_balance(), 600)
-        self.assertEqual(self.savings.transactions[-1]["transaction_type"], "deposit")
+        self.assertEqual(transaction_type, "deposit")
 
     def test_withdraw(self):
         result = self.savings.withdraw(50)
@@ -58,6 +60,7 @@ class TestSavingsAccount(unittest.TestCase):
 
     def test_account_type(self):
         self.assertIsInstance(self.savings.get_account_type(), str)
+
 
 class TestCheckingAccount(unittest.TestCase):
     def setUp(self):
@@ -77,6 +80,7 @@ class TestCheckingAccount(unittest.TestCase):
         overdraft_amount = self.checking.get_overdraft_available()
         self.assertEqual(overdraft_amount, 298)
 
+
 class TestBusinessAccount(unittest.TestCase):
     def setUp(self):
         self.business = BusinessAccount("Joe", "Mwamba Ltd", 300)
@@ -95,16 +99,19 @@ class TestBusinessAccount(unittest.TestCase):
         overdraft_amount = self.business.get_overdraft_available()
         self.assertEqual(overdraft_amount, 1595)
 
+
 class StandAloneFunctions(unittest.TestCase):
     def test_amount_less_than_zero(self):
+        error_raised = "Amount must be a positive number and reasonable"
         with self.assertRaises(ValueError) as err:
             validate_amount(-900)
-            self.assertEqual(err.exception, "Amount must be a positive number and reasonable")
+            self.assertEqual(err.exception, error_raised)
 
     def test_amount_more_than_a_million(self):
+        error_raised = "Amount must be a positive number and reasonable"
         with self.assertRaises(ValueError) as err:
             validate_amount(1000001)
-            self.assertEqual(err.exception, "Amount must be a positive number and reasonable")
+            self.assertEqual(err.exception, error_raised)
 
     def test_simple_interest(self):
         simple_interest = calculate_interest(100, 2, 10)
@@ -123,7 +130,8 @@ class TestCards(unittest.TestCase):
 
     def test_debit_purchase_success(self):
         self.debit.make_purchase(500, "supermarket")
-        self.assertEqual(self.debit.transactions[-1]["merchant"], "supermarket")
+        transaction_merchant = self.debit.transactions[-1]["merchant"]
+        self.assertEqual(transaction_merchant, "supermarket")
 
     def test_debit_purchase_fail(self):
         with self.assertRaises(ValueError):
@@ -163,6 +171,7 @@ class TestAccountManagementFunctions(unittest.TestCase):
         self.savings.deposit(200)
         stmt = generate_account_statement(self.savings)
         self.assertIn("Account statement for Joe", stmt)
+
 
 class TestBankingSystem(unittest.TestCase):
     def setUp(self):
