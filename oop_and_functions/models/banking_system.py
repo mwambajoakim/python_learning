@@ -325,13 +325,13 @@ class DebitCard(Card):
                   List of transactions made.
         """
         if amount <= 1000:
-            if self.linked_account.withdraw(amount):
-                transaction = {
-                    "amount": amount,
-                    "merchant": merchant,
-                    "date": datetime.datetime.now()
-                }
-                self.transactions.append(transaction)
+            self.linked_account.withdraw(amount)
+            transaction = {
+                "amount": amount,
+                "merchant": merchant,
+                "date": datetime.datetime.now()
+            }
+            self.transactions.append(transaction)
         else:
             raise ValueError("Exceeds daily spend")
 # ----------------------------------------------------------------
