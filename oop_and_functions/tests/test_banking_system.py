@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """These are tests for the banking system app"""
 import unittest
-import datetime
-import time
 from models.banking_system import (
     Account, SavingsAccount, BusinessAccount, CheckingAccount, validate_amount,
     calculate_interest, format_currency, generate_transaction_id, Card,
