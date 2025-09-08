@@ -110,3 +110,8 @@ class TestCalculateInterest(unittest.TestCase):
     def test_simple_interest(self):
         simple_interest = calculate_interest(100, 2, 10)
         self.assertEqual(simple_interest, 20)
+
+class TestFormatCurrency(unittest.TestCase):
+    def test_currency_format(self):
+        formatted_amount = format_currency(1000000)
+        self.assertEqual(formatted_amount, 1,000,000)
