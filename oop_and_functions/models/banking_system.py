@@ -332,7 +332,8 @@ class DebitCard(Card):
                     "date": datetime.datetime.now()
                 }
                 self.transactions.append(transaction)
-
+        else:
+            raise ValueError("Exceeds daily spend")
 # ----------------------------------------------------------------
 # Credit Card
 # ----------------------------------------------------------------
