@@ -100,6 +100,8 @@ def generate_transaction_id():
 # ------------------------------------------
 # Inheritance
 # -----------------------------------------
+
+
 class SavingsAccount(Account):
     """Creates a savings account.
        It inherits from the class Account.
@@ -108,7 +110,7 @@ class SavingsAccount(Account):
            account_holder: Account owner.
            initial_balance: Amount in the account.
     """
-    monthly_interest = 0.5 / 100
+    earned_interest = 0.5 / 100
 
     def __init__(self, account_holder, initial_balance=100):
         """Initialize a Savings Account"""
@@ -139,8 +141,9 @@ class SavingsAccount(Account):
 
     def apply_monthly_interest(self):
         """Apply a monthly interest to balance in account"""
-        monthl_interest = SavingsAccount.monthly_interest * self.initial_balance
-        return self.initial_balance + monthly_interest
+        balance = self.initial_balance
+        monthly_interest = SavingsAccount.earned_interest * balance
+        return balance + monthly_interest
 
     def get_account_type(self):
         """Return the account type"""
@@ -150,6 +153,8 @@ class SavingsAccount(Account):
 # ----------------------------------------------
 # Checking Account
 # ----------------------------------------------
+
+
 class CheckingAccount(Account):
 
     overdraft_amount = 500
@@ -171,9 +176,9 @@ class CheckingAccount(Account):
                 self.initial_balance -= overdraft_deduction
             self.initial_balance -= amount
             transaction = {
-            "transaction_type": "withdrawal",
-            "amount": amount,
-            "date": datetime.datetime.now()
+                "transaction_type": "withdrawal",
+                "amount": amount,
+                "date": datetime.datetime.now()
             }
             self.transactions.append(transaction)
             return True
@@ -198,7 +203,7 @@ class CheckingAccount(Account):
 class BusinessAccount(CheckingAccount):
 
     overdraft_amount = 2000
-    
+
     def __init__(self, account_holder, business_name, initial_balance=0):
         """Initialize a Business Account"""
         super().__init__(account_holder, initial_balance)
@@ -215,15 +220,15 @@ class BusinessAccount(CheckingAccount):
                   False if transaction is invalid.
         """
         balance_amount_difference = self.initial_balance - amount
-        overdraft_deduction  = 5
+        overdraft_deduction = 5
         if balance_amount_difference >= -BusinessAccount.overdraft_amount:
             if balance_amount_difference <= 0:
                 self.initial_balance -= overdraft_deduction
             self.initial_balance -= amount
             transaction = {
-            "transaction_type": "withdrawal",
-            "amount": amount,
-            "date": datetime.datetime.now()
+                "transaction_type": "withdrawal",
+                "amount": amount,
+                "date": datetime.datetime.now()
             }
             self.transactions.append(transaction)
             return True
@@ -367,6 +372,8 @@ class CreditCard(Card):
 # ----------------------------------------------------
 # Account Management Functions
 # ----------------------------------------------------
+
+
 def create_account(account_type, holder_name, initial_deposit=0):
     """Factory function to create different account types"""
     accounts = {
@@ -379,11 +386,13 @@ def create_account(account_type, holder_name, initial_deposit=0):
         raise ValueError("Enter a valid account type")
     return AccountClass(holder_name, initial_deposit)
 
+
 def transfer_funds(from_account, to_account, amount):
     """Transfer money between accounts"""
     from_account.withdraw(amount)
     to_account.deposit(amount)
     print("Your transaction was successful")
+
 
 def generate_account_statement(account, start_date=None, end_date=None):
     """Generate formatted account statement"""
@@ -402,29 +411,36 @@ def generate_account_statement(account, start_date=None, end_date=None):
         "-" * 40
         ]
     for t in transaction:
-        statement_lines.append(
-            f"{t['transaction_type']:<20} {t['amount']:<15} {t['date'].strftime("%Y-%m-%d %H:%M:%S"):<10.2}"
+        line = (
+            f"{t['transaction_type']:<20} "
+            f"{t['amount']:<15.2} "
+            f"{t['date'].strftime('%Y-%m-%d %H:%M:%S'):<10}"
             )
+        statement_lines.append(line)
     return "\n".join(statement_lines)
 
 
 def find_accounts_by_holder(accounts_list, holder_name):
     """Find all accounts belonging to a specific holder"""
-    return [account for account in accounts_list if account.account_holder.lower() == holder_name.lower()]
+    return [account
+            for account in accounts_list
+            if account.account_holder.lower() == holder_name.lower()
+            ]
 
 
 # -----------------------------------------------------------
 # Banking System Class
 # -----------------------------------------------------------
 
+
 class BankingSystem:
     def __init__(self, bank_name):
-       self.bank_name = bank_name
-       self.accounts = []
-    
+        self.bank_name = bank_name
+        self.accounts = []
+
     def add_account(self, account):
         self.accounts.append(account)
-    
+
     def get_total_deposits(self):
         deposits = 0
         for account in self.accounts:
@@ -432,7 +448,7 @@ class BankingSystem:
                 if transaction["transaction_type"] == "deposit":
                     deposits += transaction["amount"]
         return deposits
-    
+
     def get_accounts_summary(self):
         summary = []
         for account in self.accounts:
