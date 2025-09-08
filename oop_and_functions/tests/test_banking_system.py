@@ -75,4 +75,38 @@ class TestCheckingAccount(unittest.TestCase):
     def test_get_overdraft_available(self):
         self.checking.withdraw(700)
         overdraft_amount = self.checking.get_overdraft_available()
-        self.assertEqual(amount, 298)
+        self.assertEqual(overdraft_amount, 298)
+
+class TestBusinessAccount(unittest.TestCase):
+    def setUp(self):
+        self.business = BusinessAccount("Joe", "Mwamba Ltd", 300)
+
+    def test_withdrawal_within_amount(self):
+        result = self.business.withdraw(80)
+        self.assertTrue(result)
+
+    def test_withdrawal_overdraft(self):
+        result = self.business.withdraw(600)
+        self.assertTrue(result)
+        self.assertEqual(self.business.get_balance(), -305)
+
+    def test_get_overdraft_available(self):
+        self.business.withdraw(700)
+        overdraft_amount = self.business.get_overdraft_available()
+        self.assertEqual(overdraft_amount, 1595)
+
+class TestValidateAmount(unittest.TestCase):
+    def test_amount_less_than_zero(self):
+        with self.assertRaises(ValueError) as err:
+            validate_amount(-900)
+            self.assertEqual(err.exception, "Amount must be a positive number and reasonable")
+
+    def test_amount_more_than_a_million(self):
+        with self.assertRaises(ValueError) as err:
+            validate_amount(1000001)
+            self.assertEqual(err.exception, "Amount must be a positive number and reasonable")
+
+class TestCalculateInterest(unittest.TestCase):
+    def test_simple_interest(self):
+        simple_interest = calculate_interest(100, 2, 10)
+        self.assertEqual(simple_interest, 20)
