@@ -113,7 +113,7 @@ class StandAloneFunctions(unittest.TestCase):
     def test_currency_format(self):
         formatted_amount = format_currency(1000000)
         self.assertEqual(formatted_amount, "$1,000,000")
-   
+
 
 class TestCards(unittest.TestCase):
     def setUp(self):
@@ -163,3 +163,25 @@ class TestAccountManagementFunctions(unittest.TestCase):
         self.savings.deposit(200)
         stmt = generate_account_statement(self.savings)
         self.assertIn("Account statement for Joe", stmt)
+
+class TestBankingSystem(unittest.TestCase):
+    def setUp(self):
+        self.bank = BankingSystem("My Bank")
+        self.account1 = Account("Joe", 500)
+        self.account2 = Account("Mwamba", 300)
+        self.bank.add_account(self.account1)
+        self.bank.add_account(self.account2)
+        self.account1.deposit(100)
+        self.account2.deposit(700)
+
+    def test_account_deposits(self):
+        total_deposits = self.bank.get_total_deposits()
+        self.assertEqual(total_deposits, 800)
+
+    def test_account_added(self):
+        self.assertEqual(len(self.bank.accounts), 2)
+
+    def test_get_accounts_summary(self):
+        summary = self.bank.get_accounts_summary()
+        self.assertEqual(len(summary), 2)
+        self.assertIn("Account Holder", summary[0])
