@@ -13,7 +13,7 @@ class Account:
         """Define the account holder and initial balance in account"""
         self.account_holder = account_holder
         self.initial_balance = initial_balance
-        Account._account_counter += 1
+        __class__._account_counter += 1
         self.transactions = []
 
     def deposit(self, amount):
@@ -31,7 +31,6 @@ class Account:
         """Records the withdrawal of an amount of money"""
         if self.initial_balance > amount:
             self.initial_balance -= amount
-            self.transactions.append(transaction)
             return True
         return False
 
@@ -128,7 +127,8 @@ class SavingsAccount(Account):
                   False if transaction is invalid.
         """
         initial_balance_difference = self.initial_balance - amount
-        if initial_balance_difference > self.initial_balance:
+        floor_balance_amount = 100
+        if initial_balance_difference < floor_balance_amount:
             return False
         self.initial_balance -= amount
         transaction = {
@@ -324,10 +324,6 @@ class DebitCard(Card):
            Return:
                   List of transactions made.
         """
-        if not self.is_active:
-            raise ValueError("The card is inactive")
-        if amount <= 0:
-            raise ValueError("The amount must be positive")
         if amount <= 1000:
             if self.linked_account.withdraw(amount):
                 transaction = {
@@ -356,10 +352,6 @@ class CreditCard(Card):
            Return:
                   List of transactions made.
         """
-        if not self.is_active:
-            raise ValueError("The card is inactive")
-        if amount <= 0:
-            raise ValueError("The amount must be positive")
         if amount < CreditCard.credit_limit:
             if self.linked_account.withdraw(amount):
                 transaction = {
