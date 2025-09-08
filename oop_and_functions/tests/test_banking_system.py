@@ -61,4 +61,18 @@ class TestSavingsAccount(unittest.TestCase):
 
 class TestCheckingAccount(unittest.TestCase):
     def setUp(self):
-        checking = CheckingAccount("Joe", 500)
+        self.checking = CheckingAccount("Joe", 500)
+
+    def test_withdrawal_within_amount(self):
+        result = self.checking.withdraw(80)
+        self.assertTrue(result)
+
+    def test_withdrawal_overdraft(self):
+        result = self.checking.withdraw(600)
+        self.assertTrue(result)
+        self.assertEqual(self.checking.get_balance(), -102)
+
+    def test_get_overdraft_available(self):
+        self.checking.withdraw(700)
+        overdraft_amount = self.checking.get_overdraft_available()
+        self.assertEqual(amount, 298)
