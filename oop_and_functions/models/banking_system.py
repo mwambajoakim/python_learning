@@ -324,6 +324,10 @@ class DebitCard(Card):
            Return:
                   List of transactions made.
         """
+        if not self.is_active:
+            raise ValueError("The card is inactive")
+        if amount <= 0:
+            raise ValueError("The amount must be positive")
         if amount <= 1000:
             self.linked_account.withdraw(amount)
             transaction = {
@@ -353,6 +357,10 @@ class CreditCard(Card):
            Return:
                   List of transactions made.
         """
+        if not self.is_active:
+            raise ValueError("The card is inactive")
+        if amount <= 0:
+            raise ValueError("The amount must be positive")
         if amount <= __class__.credit_limit:
             self.linked_account.withdraw(amount)
             transaction = {
