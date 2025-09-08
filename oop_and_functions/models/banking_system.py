@@ -361,6 +361,8 @@ class CreditCard(Card):
                     "date": datetime.datetime.now()
                 }
                 self.transactions.append(transaction)
+        else:
+            raise ValueError("Exceeds credit limit")
 
 # ----------------------------------------------------
 # Account Management Functions
