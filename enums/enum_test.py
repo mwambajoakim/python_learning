@@ -82,7 +82,14 @@ class HttpStatus(IntEnum):
 # NORTH, SOUTH, EAST, WEST (let Python assign automatic values)
 
 # TODO: Create Direction enum using functional API
-Direction = None
+Direction = Enum(
+    "Direction", [
+        ("NORTH", auto()),
+        ("SOUTH", auto()),
+        ("EAST", auto()),
+        ("WEST", auto())
+    ]
+    )
 
 
 # PROBLEM 6: Enum with Methods (20 points)
