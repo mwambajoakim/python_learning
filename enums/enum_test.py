@@ -72,7 +72,9 @@ class Color(Enum):
 
 class HttpStatus(IntEnum):
     # TODO: Implement the HttpStatus IntEnum
-    pass
+    OK = 200
+    NOT_FOUND = 404
+    INTERNAL_ERROR = 500
 
 
 # PROBLEM 5: Functional API (15 points)
