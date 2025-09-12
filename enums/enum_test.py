@@ -57,11 +57,11 @@ class Color(Enum):
 
     def hex_code(self):
         if self == Color.RED:
-            return "#FF0000"
+            return f"#FF0000"
         elif self == Color.GREEN:
-            return "#00FF00"
+            return f"#00FF00"
         elif self == Color.BLUE:
-            return "#0000FF"
+            return f"#0000FF"
 
 
 # PROBLEM 4: IntEnum Usage (10 points)
