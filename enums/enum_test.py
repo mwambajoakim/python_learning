@@ -15,7 +15,7 @@ import unittest
 # PROBLEM 1: Basic Enum Creation (15 points)
 # Create an enum called 'Status' with the following values:
 # - PENDING with value 1
-# - IN_PROGRESS with value 2  
+# - IN_PROGRESS with value 2
 # - COMPLETED with value 3
 # - CANCELLED with value 4
 
@@ -42,7 +42,7 @@ class Priority(Enum):
 # PROBLEM 3: String Enum (15 points)
 # Create an enum called 'Color' where each member has a string value:
 # - RED = "red"
-# - GREEN = "green" 
+# - GREEN = "green"
 # - BLUE = "blue"
 # Add a method called 'hex_code()' that returns the hex color code:
 # - RED -> "#FF0000"
@@ -95,7 +95,7 @@ Direction = Enum(
 # PROBLEM 6: Enum with Methods (20 points)
 # Create an enum called 'Planet' with the following data and methods:
 # Each planet should store mass (kg) and radius (m)
-# 
+#
 # Data:
 # - MERCURY: mass=3.303e+23, radius=2.4397e6
 # - VENUS: mass=4.869e+24, radius=6.0518e6
@@ -104,7 +104,8 @@ Direction = Enum(
 # Methods:
 # - surface_gravity(): returns surface gravity in m/s²
 #   Formula: G * mass / (radius²) where G = 6.67300E-11
-# - __str__(): returns formatted string like "Earth (mass: 5.98e+24 kg, radius: 6.38e+06 m)"
+# - __str__(): returns formatted string like
+# "Earth (mass: 5.98e+24 kg, radius: 6.38e+06 m)"
 
 class Planet(Enum):
     # TODO: Implement Planet enum with constructor and methods
@@ -127,10 +128,12 @@ class Planet(Enum):
 # PROBLEM 7: Flag Enum (15 points)
 # Create a Flag enum called 'Permission' for file permissions:
 # - READ = 1
-# - WRITE = 2  
+# - WRITE = 2
 # - EXECUTE = 4
-# Add a class method 'from_octal(octal_str)' that converts octal string to Permission flags
-# Example: Permission.from_octal("755") should return READ|WRITE|EXECUTE for owner,
+# Add a class method 'from_octal(octal_str)'
+# that converts octal string to Permission flags
+# Example: Permission.from_octal("755")
+# should return READ|WRITE|EXECUTE for owner,
 # READ|EXECUTE for group and others
 
 class Permission(Flag):
@@ -146,10 +149,26 @@ class Permission(Flag):
         WRITE_EXECUTE = WRITE | EXECUTE
         READ_WRITE_EXECUTE = READ | WRITE | EXECUTE
 
+        for i in range(len(octal_str)):
+            if octal_str[i] == 1:
+                return Permission.READ
+            elif octal_str[i] == 2:
+                return Permission.WRITE
+            elif octal_str[i] == 3:
+                return READ_WRITE
+            elif octal_str[i] == 4:
+                return Permission.EXECUTE
+            elif octal_str[i] == 5:
+                return READ_EXECUTE
+            elif octal_str[i] == 6:
+                return WRITE_EXECUTE
+            elif octal_str[i] == 7:
+                return READ_WRITE_EXECUTE
+
 
 # TEST CASES (DO NOT MODIFY)
 class TestEnums(unittest.TestCase):
-    
+
     def test_status_enum(self):
         """Test Problem 1: Basic Enum Creation"""
         self.assertEqual(Status.PENDING.value, 1)
@@ -157,14 +176,14 @@ class TestEnums(unittest.TestCase):
         self.assertEqual(Status.COMPLETED.value, 3)
         self.assertEqual(Status.CANCELLED.value, 4)
         self.assertEqual(len(Status), 4)
-    
+
     def test_priority_enum(self):
         """Test Problem 2: Enum with Auto Values"""
         priorities = list(Priority)
         self.assertEqual(len(priorities), 4)
         self.assertTrue(all(isinstance(p.value, int) for p in priorities))
         self.assertTrue(Priority.LOW.value < Priority.MEDIUM.value)
-    
+
     def test_color_enum(self):
         """Test Problem 3: String Enum"""
         self.assertEqual(Color.RED.value, "red")
@@ -173,14 +192,14 @@ class TestEnums(unittest.TestCase):
         self.assertEqual(Color.RED.hex_code(), "#FF0000")
         self.assertEqual(Color.GREEN.hex_code(), "#00FF00")
         self.assertEqual(Color.BLUE.hex_code(), "#0000FF")
-    
+
     def test_http_status_enum(self):
         """Test Problem 4: IntEnum Usage"""
         self.assertEqual(HttpStatus.OK, 200)
         self.assertEqual(HttpStatus.NOT_FOUND, 404)
         self.assertEqual(HttpStatus.INTERNAL_ERROR, 500)
         self.assertTrue(HttpStatus.OK < HttpStatus.NOT_FOUND)
-    
+
     def test_direction_enum(self):
         """Test Problem 5: Functional API"""
         self.assertIsNotNone(Direction)
@@ -189,7 +208,7 @@ class TestEnums(unittest.TestCase):
         self.assertTrue(hasattr(Direction, 'EAST'))
         self.assertTrue(hasattr(Direction, 'WEST'))
         self.assertEqual(len(Direction), 4)
-    
+
     def test_planet_enum(self):
         """Test Problem 6: Enum with Methods"""
         earth = Planet.EARTH
@@ -197,13 +216,13 @@ class TestEnums(unittest.TestCase):
         self.assertIn("Earth", str(earth))
         self.assertIn("mass", str(earth))
         self.assertIn("radius", str(earth))
-    
+
     def test_permission_enum(self):
         """Test Problem 7: Flag Enum"""
         self.assertEqual(Permission.READ.value, 1)
         self.assertEqual(Permission.WRITE.value, 2)
         self.assertEqual(Permission.EXECUTE.value, 4)
-        
+
         combined = Permission.READ | Permission.WRITE
         self.assertIn(Permission.READ, combined)
         self.assertIn(Permission.WRITE, combined)
@@ -216,6 +235,6 @@ if __name__ == "__main__":
     print("Complete the enum implementations above the test cases.")
     print("Run this file to test your solutions.")
     print()
-    
+
     # Run the tests
     unittest.main(verbosity=2)
