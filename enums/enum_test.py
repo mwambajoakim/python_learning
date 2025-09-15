@@ -108,7 +108,20 @@ Direction = Enum(
 
 class Planet(Enum):
     # TODO: Implement Planet enum with constructor and methods
-    pass
+    MERCURY = (3.303e+23, 2.4397e6)
+    VENUS = (4.869e+24, 6.0518e6)
+    EARTH = (5.976e+24, 6.37814e6)
+
+    def __init__(self, mass, radius):
+        self.mass = mass
+        self.radius = radius
+
+    def __str__(self):
+        return f"{self.name.capitalize()} (mass: {self.mass} kg, radius: {self.radius} m)"
+
+    def surface_gravity(self):
+        G = 6.67300E-11
+        return G * self.mass / (self.radius ** 2)
 
 
 # PROBLEM 7: Flag Enum (15 points)
@@ -122,7 +135,16 @@ class Planet(Enum):
 
 class Permission(Flag):
     # TODO: Implement Permission Flag enum with from_octal method
-    pass
+    READ = 1
+    WRITE = 2
+    EXECUTE = 4
+
+    @classmethod
+    def from_octal(octal_str):
+        READ_WRITE = READ | WRITE
+        READ_EXECUTE = READ | EXECUTE
+        WRITE_EXECUTE = WRITE | EXECUTE
+        READ_WRITE_EXECUTE = READ | WRITE | EXECUTE
 
 
 # TEST CASES (DO NOT MODIFY)
