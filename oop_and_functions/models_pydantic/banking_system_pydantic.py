@@ -15,10 +15,14 @@ class Account(BaseModel):
     def deposit(self, amount: int):
        validated = amount_greater_than_zero(amount=amount)
        self.initial_balance += validated.amount
+       return amount
     
     def withdraw(self, amount):
-        # Your implementation here  
-        pass
+        validated = amount_greater_than_zero(amount=amount)
+        if self.initial_balance < validated.amount:
+            return False    
+        self.initial_balance -= validated.amount
+        return True
     
     def get_balance(self):
         # Your implementation here
