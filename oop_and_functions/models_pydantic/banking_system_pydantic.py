@@ -29,6 +29,6 @@ class Account(BaseModel):
     
     def get_account_info(self):
         return (
-            f"Account Holder: {self.account_holder}"
+            f"Account Holder: {self.account_holder}\n"
             f"Account Balance: {self.initial_balance}"
             )
