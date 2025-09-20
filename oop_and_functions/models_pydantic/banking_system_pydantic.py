@@ -25,8 +25,7 @@ class Account(BaseModel):
         return True
     
     def get_balance(self):
-        # Your implementation here
-        pass
+        return self.initial_balance
     
     def get_account_info(self):
         # Your implementation here
