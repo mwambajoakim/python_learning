@@ -32,3 +32,20 @@ class Account(BaseModel):
             f"Account Holder: {self.account_holder}\n"
             f"Account Balance: {self.initial_balance}"
             )
+
+class SavingsAccount(Account):
+    interest_rate :ClassVar[int] = 1.005
+    
+    initial_balance : int = 100
+
+    def withdraw(self, amount: int):
+        balance = self.initial_balance
+
+        if balance - withdraw < balance:
+            return False
+        self.initial_balance -= amount
+        return True
+
+    def apply_monthly_interest(self):
+        self.initial_balance * self.__class__.interest_rate
+        return self.initial_balance
