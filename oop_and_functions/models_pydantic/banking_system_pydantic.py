@@ -40,6 +40,25 @@ class SavingsAccount(Account):
 
     def withdraw(self, amount: int):
         balance = self.initial_balance
+        floor_balance = 100
+        
+        if balance - withdraw < floor_balance:
+            return False
+        self.initial_balance -= amount
+        return True
+
+    def apply_monthly_interest(self):
+        self.initial_balance * self.__class__.interest_rate
+        return self.initial_balance
+
+    def get_account_type(self):
+        return f"Savings Account"
+
+class CheckingAccount(Account):
+    overdraft_fee :ClassVar[int] = 2
+    
+    def withdraw(self, amount: int):
+        balance = self.initial_balance
 
         if balance - withdraw < balance:
             return False
@@ -49,3 +68,6 @@ class SavingsAccount(Account):
     def apply_monthly_interest(self):
         self.initial_balance * self.__class__.interest_rate
         return self.initial_balance
+
+    def get_account_type(self):
+        return f"Checking Account"
