@@ -1,10 +1,13 @@
-from pydantic import BaseModel, Field, conint
-from typing import ClassVar, Annotated, List
+from pydantic import BaseModel, Field, validator, root_validator
+from typing import ClassVar, Annotated, List, Dict, Optional
+from __future__ import annotations
+from datetime import datetime, date
+import random
 
 
-class amount_greater_than_zero(BaseModel):
-    amount : int = Field(gt=0)
-
+# --------------------------------------
+# Account Class
+# --------------------------------------
 class Account(BaseModel):
     # Class variable for generating unique account numbers
     _account_counter: ClassVar[int] = 1000
@@ -13,26 +16,52 @@ class Account(BaseModel):
     initial_balance: int = Field(default=0)
     account_number: int = Field(default_factory=lambda: Account._next_account_number())
     transaction_history = List[Dict] = Field(default_factory=list)
+
+    class Config:
+        validate_assignment = True
+
+    @classmethod
+    def _next_account_number(cls) -> int:
+        cls._account_counter += 1
+        return cls._account_counter
+
+    @validator("initial_balance")
+    def balance_must_be_number(cls, num):
+        try:
+            return int(num)
+        except Exception:
+            raise ValueError("Initial balance must be numeric")
     
     def deposit(self, amount: int):
-       validated = amount_greater_than_zero(amount=amount)
-       self.initial_balance += validated.amount
-       return amount
-    
-    def withdraw(self, amount):
-        validated = amount_greater_than_zero(amount=amount)
-        if self.initial_balance < validated.amount:
-            return False    
-        self.initial_balance -= validated.amount
+       self.initial_balance += int(amount)
+       self._record_transaction("Deposit", amount, description)
+ 
+    def withdraw(self, amount: int) -> bool:
+        if int(amount) > self.initial_balance:
+            return False
+        self.initial_balance -= int(amount)
+        self._record_transaction("Withdrawal", amount, description)
         return True
+
+    def _record_transaction(self, transaction_type: str, amount: int, description: str):
+        transaction = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "type": transaction_type,
+            "amount": int(amount),
+            "description": description,
+            "balance": int((self.initial_balance)
+                           }
+            self.transaction_history.append(transaction)
+            return transaction
     
-    def get_balance(self):
-        return self.initial_balance
+    def get_balance(self) -> int:
+        return int(self.initial_balance)
     
-    def get_account_info(self):
+    def get_account_info(self) -> str:
         return (
             f"Account Holder: {self.account_holder}\n"
             f"Account Balance: {self.initial_balance}"
+            f"Transaction: {self.transaction_history}"
             )
 
 class SavingsAccount(Account):
