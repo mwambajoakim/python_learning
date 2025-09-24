@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, conint
-from typing import ClassVar, Annotated
+from typing import ClassVar, Annotated, List
 
 
 class amount_greater_than_zero(BaseModel):
@@ -11,6 +11,8 @@ class Account(BaseModel):
     
     account_holder: str
     initial_balance: int = Field(default=0)
+    account_number: int = Field(default_factory=lambda: Account._next_account_number())
+    transaction_history = List[Dict] = Field(default_factory=list)
     
     def deposit(self, amount: int):
        validated = amount_greater_than_zero(amount=amount)
